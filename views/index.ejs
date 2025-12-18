@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Uploader Project</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            padding: 30px 28px;
+            width: 330px;
+            border-radius: 18px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.9s ease forwards;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+            text-align: center;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            background: #f1f1f1;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="file"]:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 14px rgba(0, 0, 0, 0.25);
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #43cea2, #185a9d);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        #uploaded-image-container {
+            margin-top: 30px;
+            text-align: center;
+            animation: fadeScale 0.8s ease forwards;
+        }
+
+        #uploaded-image-container h2 {
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-weight: 600;
+            animation: fadeIn 0.8s ease;
+        }
+
+        #uploaded-image-container img {
+            max-width: 320px;
+            border-radius: 16px;
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.4);
+            animation: zoomIn 0.7s ease;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.85);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="file" name="file" id="file-input">
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Upload Image">
+            </div>
+        </form>
+    </div>
+
+    <div id="uploaded-image-container">
+        <% if (url) { %>
+            <h2>File Uploaded Successfully</h2>
+            <img src="<%= url %>" alt="Uploaded Image">
+            <% } %>
+    </div>
+
+
+    <script>
+        const uploadedContainer = document.getElementById("uploaded-image-container");
+
+        // Always hide image on page load
+        uploadedContainer.style.display = "none";
+
+        // Check if user just uploaded (flag set before submit)
+        if (sessionStorage.getItem("justUploaded") === "true") {
+            uploadedContainer.style.display = "block";
+            sessionStorage.removeItem("justUploaded");
+        }
+
+        // Set flag WHEN user clicks upload
+        const form = document.querySelector("form");
+        form.addEventListener("submit", () => {
+            sessionStorage.setItem("justUploaded", "true");
+        });
+    </script>
+
+
+</body>
+
+
+</html>
