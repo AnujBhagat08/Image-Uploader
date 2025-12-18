@@ -2,6 +2,10 @@
 
 A simple Image Uploader built using Node.js, Express, and EJS. This project focuses on handling image uploads, server-side rendering, and basic client-side UI state management. It demonstrates how backend logic and frontend behavior work together in a small, practical application.
 
+<img width="874" height="507" alt="Screenshot 2025-12-18 190901" src="https://github.com/user-attachments/assets/007c35b9-a004-46c9-bf1f-8c2d6ea4be47" />
+
+
+
 ---
 
 ## Description
